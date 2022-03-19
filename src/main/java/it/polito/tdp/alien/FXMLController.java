@@ -1,12 +1,13 @@
 /**
  * Sample Skeleton for 'Scene.fxml' Controller Class
  */
-
 package it.polito.tdp.alien;
 
 import java.net.URL;
 import java.util.*;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.alien.model.Parola;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -30,7 +31,9 @@ public class FXMLController {
     @FXML
     private TextArea txtTraduzione;
     
-    private Map <String,String> dizionario = new TreeMap<String,String>();
+    private Map <String,List<String>> dizionario = new TreeMap<String,List<String>>();
+    private Parola parolaAliena;
+    private List <Parola> listP = new LinkedList<Parola>();
 
     @FXML
     void handleClear(ActionEvent event) {
@@ -41,12 +44,24 @@ public class FXMLController {
 
     @FXML
     void handleTraslate(ActionEvent event) {
+    	txtParola.getText().toLowerCase();
     	String parola = txtParola.getText();
-    	parola.toLowerCase();
     	String c[] = parola.split(" ");
+    	
+    	if(!dizionario.containsKey(c[0])) {
+    		parolaAliena = new Parola(c[0]);
+    		listP.add(parolaAliena);
+    	}
+    	else {
+    		for(Parola pp : listP)
+    			if(pp.getParola().equals(parola)) {
+    				parolaAliena = pp;
+    			}
+    	}		
     	if(c.length == 2) {
     		if(c[0].matches("[a-zA-Z]*") && c[1].matches("[a-zA-Z]*")) {
-   				dizionario.put(c[0], c[1]);
+    			parolaAliena.addTraduzione(c[1]);
+    			dizionario.put(c[0], parolaAliena.getElencoTraduzioni());		//CAUSA UN EXCEPTION MA NON CAPISCO IL MOTIVO
    				txtTraduzione.setText("Parola correttamente salvata nel dizionario.\n");
    				txtErrore.setText("");
     		}
@@ -55,8 +70,12 @@ public class FXMLController {
     	}
     	else {
     		if(parola.matches("[a-zA-Z]*")) {
-    			if(dizionario.containsKey(parola)) {
-    				txtTraduzione.setText(dizionario.get(parola));
+    			if(dizionario.containsKey(c[0])) {
+    				String s = "";
+    				for(String ss : parolaAliena.getElencoTraduzioni()) {
+    					s+=ss+"\n";
+    				}
+    				txtTraduzione.setText(s);
     				txtErrore.setText("");
     			}
     			else
@@ -72,7 +91,7 @@ public class FXMLController {
     void initialize() {
         assert txtParola != null : "fx:id=\"txtParola\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtTraduzione != null : "fx:id=\"txtTraduzione\" was not injected: check your FXML file 'Scene.fxml'.";
-        
+
     }
 
 }

@@ -36,7 +36,7 @@
                         <Insets left="40.0" top="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" onAction="#handleTraslate" text="Translate">
+                  <Button mnemonicParsing="false" onAction="#handleTraslate" text="Traslate">
                      <HBox.margin>
                         <Insets left="20.0" right="10.0" top="10.0" />
                      </HBox.margin>
