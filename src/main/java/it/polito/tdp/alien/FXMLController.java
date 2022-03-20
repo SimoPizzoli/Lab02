@@ -59,21 +59,23 @@ public class FXMLController {
     			}
     	}		
     	if(c.length == 2) {
-    		if(c[0].matches("[a-zA-Z]*") && c[1].matches("[a-zA-Z]*")) {
+    		if(c[0].matches("[a-zA-Z]*") && c[1].matches("[a-zA-Z]*") && !parolaAliena.isDuplicato(c[1])) {
     			parolaAliena.addTraduzione(c[1]);
     			dizionario.put(c[0], parolaAliena.getElencoTraduzioni());		//CAUSA UN EXCEPTION MA NON CAPISCO IL MOTIVO
    				txtTraduzione.setText("Parola correttamente salvata nel dizionario.\n");
    				txtErrore.setText("");
     		}
     		else 
-    			txtErrore.setText("Errore. Caratteri NON ammessi");
+    			txtErrore.setText("Errore. Caratteri NON ammessi e/o traduzione già inserita.");
     	}
     	else {
     		if(parola.matches("[a-zA-Z]*")) {
     			if(dizionario.containsKey(c[0])) {
     				String s = "";
+    				int contaTrad = 1;
     				for(String ss : parolaAliena.getElencoTraduzioni()) {
-    					s+=ss+"\n";
+    					s+=contaTrad+": "+ss+"\n";
+    					contaTrad++;
     				}
     				txtTraduzione.setText(s);
     				txtErrore.setText("");

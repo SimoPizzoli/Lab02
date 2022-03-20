@@ -59,7 +59,7 @@
    <bottom>
       <Label fx:id="txtErrore" textFill="#f20707" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets bottom="10.0" />
+            <Insets bottom="10.0" top="10.0" />
          </BorderPane.margin>
       </Label>
    </bottom>
