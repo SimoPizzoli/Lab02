@@ -48,7 +48,7 @@ public class FXMLController {
     	String parola = txtParola.getText();
     	String c[] = parola.split(" ");
     	
-    	if(!dizionario.containsKey(c[0])) {
+    	if(!dizionario.containsKey(c[0]) && c[0].matches("[a-zA-Z]*")) {
     		parolaAliena = new Parola(c[0]);
     		listP.add(parolaAliena);
     	}
@@ -70,7 +70,7 @@ public class FXMLController {
     	}
     	else {
     		if(parola.matches("[a-zA-Z]*")) {
-    			if(dizionario.containsKey(c[0])) {
+    			if(dizionario.containsKey(parola)) {
     				String s = "";
     				int contaTrad = 1;
     				for(String ss : parolaAliena.getElencoTraduzioni()) {
